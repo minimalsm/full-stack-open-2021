@@ -7,6 +7,12 @@ const Statistics = ({ good, neutral, bad }) => {
   const positive = ((good + neutral) / total) * 100
   const average = ((good * 1) + (bad * -1)) / total;
 
+  if (total === 0) {
+    return (
+      <p>No feedback given</p>
+    )
+  }
+
   return (
     <div>
       <h1>statistics</h1>
@@ -14,8 +20,8 @@ const Statistics = ({ good, neutral, bad }) => {
       <p>neutral {neutral}</p>
       <p>bad {bad}</p>
       <p>all {total}</p>
-      <p>average {average || 0}</p>
-      <p>positive {positive || 0}%</p>
+      <p>average {average}</p>
+      <p>positive {positive}%</p>
     </div>
   )
 }
@@ -50,7 +56,6 @@ const App = () => {
     </div>
   )
 }
-
 
 ReactDOM.render(
   <React.StrictMode>
