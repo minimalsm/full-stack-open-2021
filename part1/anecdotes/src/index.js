@@ -1,7 +1,30 @@
 import React, { useState } from 'react'
 import ReactDOM from 'react-dom'
 
-const App = (props) => {
+const MostPopularAnecdote = ({ votes }) => {
+  const mostVotedIndex = votes.indexOf(Math.max(...votes))
+
+  return (
+    <div>
+      <h1>Anecdote with the most votes</h1>
+      <Anecdote
+      selected={mostVotedIndex}
+        votes={votes}
+      />
+    </div>
+  )
+}
+
+const Anecdote = ({ selected, votes }) => {
+  return (
+    <div>
+      <p>{anecdotes[selected]}</p>
+      <p>has {votes[selected]} votes</p>
+    </div>
+  )
+}
+
+const App = () => {
   const [selected, setSelected] = useState(0)
   const [votes, setVotes] = useState(Array.from(Array(anecdotes.length).fill(0)))
 
@@ -12,25 +35,22 @@ const App = (props) => {
   }
 
   const getRandomAnecdoteIndex = () => {
-    const numberOfAnecdotes = props.anecdotes.length
+    const numberOfAnecdotes = anecdotes.length
     const randomIndex = Math.floor(Math.random() * numberOfAnecdotes)
     return randomIndex
   }
 
-  const increasePoints = () => {
-    votes[selected] = votes[selected] + 1
-    console.log(votes)
-  }
-
   return (
     <div>
-      <p>{props.anecdotes[selected]}</p>
-      <p>has {votes[selected]} votes</p>
-
-      <button onClick={handleVote}>vote</button>
-      <button onClick={() => {
-        setSelected(getRandomAnecdoteIndex)
-      }}>next anecdore</button>
+    <h1>Anecdote of the day</h1>
+    <Anecdote selected={selected} votes={votes} />
+    
+    <button onClick={handleVote}>vote</button>
+    <button onClick={() => {
+      setSelected(getRandomAnecdoteIndex)
+    }}>next anecdore</button>
+    
+    <MostPopularAnecdote votes={votes}/>
     </div>
   )
 }
