@@ -1,6 +1,15 @@
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 
+const StatisticsTable = ({ children }) => {
+  return (
+    <table>
+      <tbody>
+        {children}
+      </tbody>
+    </table>
+  )
+}
 
 const Statistics = ({ good, neutral, bad }) => {
   const total = good + neutral + bad
@@ -15,16 +24,29 @@ const Statistics = ({ good, neutral, bad }) => {
 
   return (
     <div>
-      <h1>statistics</h1>
-      <p>good {good}</p>
-      <p>neutral {neutral}</p>
-      <p>bad {bad}</p>
-      <p>all {total}</p>
-      <p>average {average}</p>
-      <p>positive {positive}%</p>
+      <h1>Statistics</h1>
+      
+      <StatisticsTable>
+        <Statistic text='good' value={good} />
+        <Statistic text='neutral' value={neutral} />
+        <Statistic text='bad' value={bad} />
+        <Statistic text='total' value={total} />
+        <Statistic text='average' value={average} />
+        <Statistic text='positive' value={`${positive}%`} />
+      </StatisticsTable>
     </div>
   )
 }
+
+const Statistic = ({ text, value}) => (
+  <tr>
+    <td>{text} {value}</td>
+  </tr>  
+)
+
+const Button = ({ onClick, text}) => (
+  <button onClick={onClick}>{text}</button>
+)
 
 const App = () => {
   const [good, setGood] = useState(0)
@@ -35,34 +57,22 @@ const App = () => {
   const increaseNeutral = () => setNeutral(neutral + 1)
   const increaseBad = () => setBad(bad + 1)
 
-  
-
   return (
     <div>
-      <h1>give feedback</h1>
-
+      <h1>Give Feedback</h1>
+      <Button onClick={increaseGood} text='good' />
+      <Button onClick={increaseNeutral} text='neutral' />
+      <Button onClick={increaseBad} text='bad' />
       <Statistics 
         good={good}
         neutral={neutral}
         bad={bad}
       />
-
-      <button onClick={increaseGood}>good</button>
-      <button onClick={increaseNeutral}>neutral</button>
-      <button onClick={increaseBad}>bad</button>
-
-
-
     </div>
   )
 }
 
-ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
-);
+ReactDOM.render(<React.StrictMode><App /></React.StrictMode>, document.getElementById('root'));
 
 
 
