@@ -12,6 +12,13 @@ const App = () => {
 
   const addPerson = (e) => {
     e.preventDefault()
+
+    console.log('changed')
+    if (persons.some((person) => person.name === newName)) {
+      alert(`${newName} is already in the phonebook`)
+      return 
+    }
+
     const personObject = {
       name: newName
     }
@@ -28,6 +35,7 @@ const App = () => {
           <input 
             className='form-input' 
             placeholder='Name'
+            value={newName}
             onChange={handleNameChange}
             
           />
