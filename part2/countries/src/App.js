@@ -10,8 +10,8 @@ const App = () => {
   useEffect(() => {
     axios
       .get('https://restcountries.eu/rest/v2/all')
-      .then(request => {
-        setCountries(request.data)
+      .then(response => {
+        setCountries(response.data)
       })
   }, [])
 
