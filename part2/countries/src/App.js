@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import axios from 'axios'
+import Search from './components/Search'
 import Countries from './components/Countries'
 
 const App = () => {
@@ -19,20 +20,20 @@ const App = () => {
     setFilter(e.target.value)
   }
 
-
   const filteredCountries = (filter === '')
   ? countries
   : countries.filter((country) => country.name.toLowerCase().includes(filter.toLowerCase()))
 
-  console.log('filteredcountires', filteredCountries)
-
   return (
     <div>
-      <input 
-        value={filter}
-        onChange={handleFilterChange}
+      <Search
+        filter={filter}
+        handleFilterChange={handleFilterChange}
       />
-      <Countries countries={filteredCountries} />
+      <Countries 
+        countries={filteredCountries} 
+        handleFilterChange={handleFilterChange}
+      />
     </div>
   );
 }
