@@ -1,0 +1,40 @@
+import { useState, useEffect } from 'react'
+import axios from 'axios'
+import Countries from './components/Countries'
+
+const App = () => {
+  const [countries, setCountries] = useState([])
+  const [filter, setFilter] = useState('')
+
+  useEffect(() => {
+    axios
+      .get('https://restcountries.eu/rest/v2/all')
+      .then(request => {
+        setCountries(request.data)
+      })
+  }, [])
+
+  const handleFilterChange = (e) => {
+    console.log('inside handle filter change', e.target.value)
+    setFilter(e.target.value)
+  }
+
+
+  const filteredCountries = (filter === '')
+  ? countries
+  : countries.filter((country) => country.name.toLowerCase().includes(filter.toLowerCase()))
+
+  console.log('filteredcountires', filteredCountries)
+
+  return (
+    <div>
+      <input 
+        value={filter}
+        onChange={handleFilterChange}
+      />
+      <Countries countries={filteredCountries} />
+    </div>
+  );
+}
+
+export default App;
