@@ -1,13 +1,17 @@
-const Notification = ({ message, setNotification }) => {
+const Notification = ({ message, setNotification, errorState }) => {
   if (message === null) {
     return null
   }
 
+  const notificationType = errorState 
+  ? 'toast-error'
+  : 'toast-success'
+
   return (
-    <div className="toast toast-success">
+    <div className={`toast ${notificationType}`}>
       <button 
       onClick={() => setNotification(null)}
-      class="btn btn-clear float-right">
+      className="btn btn-clear float-right">
       </button>
       {message}
     </div>

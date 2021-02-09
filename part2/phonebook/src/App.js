@@ -10,7 +10,8 @@ const App = () => {
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
   const [newFilter, setNewFilter] = useState('')
-  const [notification, setNotification] = useState('an notification appeared!')
+  const [notification, setNotification] = useState(null)
+  const [errorState, setErrorState] = useState(false)
 
   useEffect(() => {
     personService
@@ -90,6 +91,7 @@ const App = () => {
       <Notification 
         setNotification={setNotification}
         message={notification}
+        errorState={errorState}
       />
       <Filter 
         newFilter={newFilter}
@@ -105,6 +107,8 @@ const App = () => {
       <Persons
         persons={filteredPersons}
         setPersons={setPersons}
+        setNotification={setNotification}
+        setErrorState={setErrorState}
       />
     </div>
   )

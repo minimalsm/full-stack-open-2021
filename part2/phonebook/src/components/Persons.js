@@ -2,12 +2,21 @@ import React from 'react'
 import Person from './Person'
 import personService from '../services/persons'
 
-const Persons = ({ persons, setPersons }) => {
+const Persons = ({ persons, setPersons, setNotification, setErrorState }) => {
   const deletePerson = (id) => {
     personService
       .deletePerson(id)
       .then(deletedPerson => {
         setPersons(persons.filter(person => person.id !== id))
+      })
+      .catch(error => {
+        setErrorState(true)
+        setNotification('This person was already deleted from our database')
+        setTimeout(() => {
+          setNotification(null)
+          setErrorState(false)
+        }, 5000)
+        setPersons(persons.filter((person) => person.id !== id))
       })
   }
 
