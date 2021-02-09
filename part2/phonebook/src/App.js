@@ -46,8 +46,14 @@ const App = () => {
     console.log(personObject)
     console.log(persons);
 
-    setPersons(persons.concat(personObject))
-    setNewName('')
+    axios
+      .post('http://localhost:3001/persons', personObject)
+      .then(response => {
+        setPersons(persons.concat(response.data))
+        setNewName('')
+      })
+
+
   }
 
   const filteredPersons = newFilter 
