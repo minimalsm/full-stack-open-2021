@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import Filter from './components/Filter'
 import PersonForm from './components/PersonForm'
 import Persons from './components/Persons'
+import Notification from './components/Notification'
 import personService from './services/persons'
 
 const App = () => {
@@ -9,6 +10,7 @@ const App = () => {
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
   const [newFilter, setNewFilter] = useState('')
+  const [notification, setNotification] = useState('an notification appeared!')
 
   useEffect(() => {
     personService
@@ -40,6 +42,8 @@ const App = () => {
     if (isDuplicatePerson(newName)) {
       alert(`${newName} is already in the phonebook, we will change their phone number for you.`)
       updatePerson(newName)
+      setNewName('')
+      setNewNumber('')
       return;
     }
 
@@ -53,6 +57,15 @@ const App = () => {
       .then(returnedPerson => {
         setPersons(persons.concat(returnedPerson))
         setNewName('')
+        setNewNumber('')
+      })
+      .then(() => {
+        setNotification(
+          `Added ${personObject.name} to the database`
+        )
+        setTimeout(() => {
+          setNotification(null)
+        }, 5000)
       })
   }
 
@@ -74,6 +87,10 @@ const App = () => {
   return (
     <div className='container'>
       <h1>Phonebook</h1>
+      <Notification 
+        setNotification={setNotification}
+        message={notification}
+      />
       <Filter 
         newFilter={newFilter}
         handleFilterChange={handleFilterChange}
