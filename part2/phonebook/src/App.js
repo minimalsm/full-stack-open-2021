@@ -30,27 +30,40 @@ const App = () => {
     setNewFilter(e.target.value)
   }
 
+  const isDuplicatePerson = (name) => {
+    return persons.some((person) => person.name.toLowerCase() === name.toLowerCase())
+  }
+
   const addPerson = (e) => {
     e.preventDefault()
 
-    console.log('changed')
-    if (persons.some((person) => person.name === newName)) {
-      alert(`${newName} is already in the phonebook`)
-      return 
+    if (isDuplicatePerson(newName)) {
+      alert(`${newName} is already in the phonebook, we will change their phone number for you.`)
+      updatePerson(newName)
+      return;
     }
 
     const personObject = {
       name: newName,
       number: newNumber
     }
-    console.log(personObject)
-    console.log(persons);
-
+  
     personService
       .create(personObject)
       .then(returnedPerson => {
         setPersons(persons.concat(returnedPerson))
         setNewName('')
+      })
+  }
+
+  const updatePerson = (name) => {
+    const person = persons.find((person) => person.name.toLowerCase() === name.toLowerCase())
+    const changedPerson = {...person, number: newNumber }
+
+    personService
+      .update(person.id, changedPerson)
+      .then(returnedPerson => {
+        setPersons(persons.map(p => p.id !== person.id ? p : returnedPerson))
       })
   }
 

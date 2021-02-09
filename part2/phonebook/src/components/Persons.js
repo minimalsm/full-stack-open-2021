@@ -17,7 +17,7 @@ const Persons = ({ persons, setPersons }) => {
       <h2>Numbers</h2>
       {persons.map((person) => 
         <Person 
-          key={person.name}
+          key={person.id}
           person={person}
           handleDeletePerson={deletePerson}
         />
