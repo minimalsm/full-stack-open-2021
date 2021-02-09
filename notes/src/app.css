@@ -28,3 +28,18 @@
   line-height: 4.5rem;
   padding: 0 2rem;
 }
+
+.error {
+  color: white;
+  background: #9b4dca;
+  font-size: 20px;
+  border-style: solid;
+  border-radius: 8px;
+  padding: 10px;
+  margin-bottom: 10px;
+
+  font-size: 2rem;
+  /* height: 5rem; */
+  line-height: 4.5rem;
+  padding: 0 2rem;
+}
