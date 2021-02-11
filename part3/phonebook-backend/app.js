@@ -46,8 +46,17 @@ app.post('/api/persons', (req, res) => {
   const body = req.body
 
   if (!body.name || !body.number) {
-    return response.status(400).json({
+    return res.status(400).json({
       error: 'content missing'
+    })
+  }
+
+  const duplicate = persons.find(person => person.name.toLowerCase() == body.name.toLowerCase())
+  console.log(duplicate)
+
+  if (duplicate) {
+    return res.status(400).json({
+      error: 'name must be unique'
     })
   }
   
