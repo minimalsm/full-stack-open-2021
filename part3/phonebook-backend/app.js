@@ -42,6 +42,26 @@ app.get('/api/persons/:id', (req, res) => {
   person ? res.json(person) : res.status(404).end()
 })
 
+app.post('/api/persons', (req, res) => {
+  const body = req.body
+
+  if (!body.name || !body.number) {
+    return response.status(400).json({
+      error: 'content missing'
+    })
+  }
+  
+  const personObject = {
+    name: body.name,
+    number: body.number,
+    id: Math.floor(Math.random() * 250) + 1 
+  }
+
+  persons = persons.concat(personObject)
+
+  res.json(personObject)
+})
+
 app.delete('/api/persons/:id', (req, res) => {
   const params = req.params
   const id = Number(params.id)
